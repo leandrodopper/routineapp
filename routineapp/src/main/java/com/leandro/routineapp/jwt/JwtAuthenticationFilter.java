@@ -1,9 +1,12 @@
 package com.leandro.routineapp.jwt;
 
+import com.leandro.routineapp.exceptions.RoutineAppException;
 import com.leandro.routineapp.security.CustomUserDetailsService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +27,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -31,18 +36,35 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = obtenerJWTdeLaSolicitud(request);
 
         //validamos el token
-        if(StringUtils.hasText(token) && jwtTokenProvider.validarToken(token)) {
-            //obtenemos el username del token
-            String username = jwtTokenProvider.obtenerUsernameDelJWT(token);
+        if(StringUtils.hasText(token)) {
+            try {
+                if (jwtTokenProvider.validarToken(token)) {
+                    //obtenemos el username del token
+                    String username = jwtTokenProvider.obtenerUsernameDelJWT(token);
 
-            //cargamos el usuario asociado al token
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    //cargamos el usuario asociado al token
+                    UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-            //establecemos la seguridad
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    //establecemos la seguridad
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                } else {
+                    //devolvemos un mensaje de error
+                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                    response.getWriter().write("{\"error\":\"Token JWT inválido\"}");
+                    return;
+                }
+            } catch (RoutineAppException ex) {
+                //devolvemos un mensaje de error
+                response.setStatus(ex.getEstado().value());
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.getWriter().write("{\"error\":\"" + ex.getMensaje() + "\"}");
+                return;
+            }
         }
+
         filterChain.doFilter(request, response);
     }
 

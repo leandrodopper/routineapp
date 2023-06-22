@@ -1,7 +1,11 @@
 package com.leandro.routineapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -20,6 +24,15 @@ public class Usuario {
     private double altura;
     private double peso;
     private int edad;
+    private String imagen;
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 
     public String getApellidos() {
         return apellidos;
@@ -66,6 +79,13 @@ public class Usuario {
             joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
     private Set<Rol> roles = new HashSet<>();
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "usuario_rutina",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "rutina_id"))
+    private List<Rutina> rutinasSeguidas;
 
     public long getId() {
         return id;
@@ -115,7 +135,15 @@ public class Usuario {
         this.roles = roles;
     }
 
-    public Usuario(long id, String nombre, String apellidos, String username, String email, String password, String telefono, double altura, double peso, int edad, Set<Rol> roles) {
+    public List<Rutina> getRutinasSeguidas() {
+        return rutinasSeguidas;
+    }
+
+    public void setRutinasSeguidas(List<Rutina> rutinasSeguidas) {
+        this.rutinasSeguidas = rutinasSeguidas;
+    }
+
+    public Usuario(long id, String nombre, String apellidos, String username, String email, String password, String telefono, double altura, double peso, int edad, String imagen, Set<Rol> roles) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -126,10 +154,11 @@ public class Usuario {
         this.altura = altura;
         this.peso = peso;
         this.edad = edad;
+        this.imagen = imagen;
         this.roles = roles;
     }
 
-    public Usuario(String nombre, String apellidos, String username, String email, String password, String telefono, double altura, double peso, int edad, Set<Rol> roles) {
+    public Usuario(String nombre, String apellidos, String username, String email, String password, String telefono, double altura, double peso, int edad, String imagen, Set<Rol> roles) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.username = username;
@@ -139,6 +168,7 @@ public class Usuario {
         this.altura = altura;
         this.peso = peso;
         this.edad = edad;
+        this.imagen = imagen;
         this.roles = roles;
     }
 

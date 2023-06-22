@@ -83,7 +83,7 @@ public class DiaRutinaServicioImpl implements DiaRutinaServicio{
     private DiaRutina mapearEntidad(DiaRutinaDto diaRutinaDto){
         DiaRutina diaRutina= new DiaRutina();
         List<Ejercicio> ejercicios=new ArrayList<>();
-        diaRutina.setRutina(rutinaRepositorio.getReferenceById(diaRutinaDto.getId_rutina()));
+        diaRutina.setRutina(rutinaRepositorio.getById(diaRutinaDto.getId_rutina()));
         diaRutina.setDescripcion(diaRutinaDto.getDescripcion());
         diaRutina.setNombre(diaRutinaDto.getNombre());
         ejercicios=ejercicioRepositorio.findAllById(diaRutinaDto.getEjerciciosIds());

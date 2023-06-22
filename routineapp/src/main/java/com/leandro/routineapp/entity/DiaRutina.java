@@ -1,5 +1,7 @@
 package com.leandro.routineapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +15,7 @@ public class DiaRutina {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rutina_id")
+    @JsonBackReference
     private Rutina rutina;
     private String descripcion;
     private String nombre;

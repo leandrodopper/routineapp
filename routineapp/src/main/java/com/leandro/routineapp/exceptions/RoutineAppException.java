@@ -29,10 +29,4 @@ public class RoutineAppException extends RuntimeException{
         this.estado = estado;
         this.mensaje = mensaje;
     }
-
-    public RoutineAppException(HttpStatus estado, String mensaje, String mensaje1) {
-        this.estado = estado;
-        this.mensaje = mensaje;
-        this.mensaje = mensaje1;
-    }
 }

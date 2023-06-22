@@ -4,11 +4,10 @@ package com.leandro.routineapp.dto;
 
 public class EjercicioDto {
     private Long id;
+    private String username_creador;
     private String nombre;
     private String descripcion;
     private String grupo_muscular;
-    private int series;
-    private int repeticiones;
     private String imagen;
     private String dificultad;
 
@@ -44,22 +43,6 @@ public class EjercicioDto {
         this.grupo_muscular = grupo_muscular;
     }
 
-    public int getSeries() {
-        return series;
-    }
-
-    public void setSeries(int series) {
-        this.series = series;
-    }
-
-    public int getRepeticiones() {
-        return repeticiones;
-    }
-
-    public void setRepeticiones(int repeticiones) {
-        this.repeticiones = repeticiones;
-    }
-
     public String getImagen() {
         return imagen;
     }
@@ -76,26 +59,15 @@ public class EjercicioDto {
         this.dificultad = dificultad;
     }
 
-    public EjercicioDto(Long id, String nombre, String descripcion, String grupo_muscular, int series, int repeticiones, String imagen, String dificultad) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.grupo_muscular = grupo_muscular;
-        this.series = series;
-        this.repeticiones = repeticiones;
-        this.imagen = imagen;
-        this.dificultad = dificultad;
+    public String getUsername_creador() {
+        return username_creador;
     }
 
-    public EjercicioDto(String nombre, String descripcion, String grupo_muscular, int series, int repeticiones, String imagen, String dificultad) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.grupo_muscular = grupo_muscular;
-        this.series = series;
-        this.repeticiones = repeticiones;
-        this.imagen = imagen;
-        this.dificultad = dificultad;
+    public void setUsername_creador(String username_creador) {
+        this.username_creador = username_creador;
     }
+
+
 
     public EjercicioDto() {
     }

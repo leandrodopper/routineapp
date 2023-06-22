@@ -1,11 +1,13 @@
 package com.leandro.routineapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.leandro.routineapp.entity.Rutina;
 
 import java.util.List;
 
 public class DiaRutinaDto {
     private Long id;
+    //@JsonIgnore
     private Long id_rutina;
     private String descripcion;
     private String nombre;

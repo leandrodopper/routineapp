@@ -1,7 +1,13 @@
 package com.leandro.routineapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Set;
 
 @Entity
@@ -12,20 +18,17 @@ public class Ejercicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="username_creador", nullable = false)
+    private String usernameCreador;
+
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "descripcion", nullable = false)
+    @Column(name = "descripcion", nullable = false, length = 500)
     private String descripcion;
 
     @Column(name = "grupo_muscular", nullable = false)
     private String grupo_muscular;
-
-    @Column(name = "series", nullable = false)
-    private int series;
-
-    @Column(name = "repeticiones", nullable = false)
-    private int repeticiones;
 
     @Column(name = "imagen", nullable = false)
     private String imagen;
@@ -33,12 +36,15 @@ public class Ejercicio {
     @Column(name = "dificultad", nullable = false)
     private String dificultad;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "ejercicios")
     private Set<DiaRutina> dia_rutina;
 
     public Long getId() {
         return id;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;
@@ -68,21 +74,6 @@ public class Ejercicio {
         this.grupo_muscular = grupo_muscular;
     }
 
-    public int getSeries() {
-        return series;
-    }
-
-    public void setSeries(int series) {
-        this.series = series;
-    }
-
-    public int getRepeticiones() {
-        return repeticiones;
-    }
-
-    public void setRepeticiones(int repeticiones) {
-        this.repeticiones = repeticiones;
-    }
 
     public String getImagen() {
         return imagen;
@@ -108,29 +99,47 @@ public class Ejercicio {
         this.dia_rutina = dia_rutina;
     }
 
-    public Ejercicio(Long id, String nombre, String descripcion, String grupo_muscular, int series, int repeticiones, String imagen, String dificultad, Set<DiaRutina> dia_rutina) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.grupo_muscular = grupo_muscular;
-        this.series = series;
-        this.repeticiones = repeticiones;
-        this.imagen = imagen;
-        this.dificultad = dificultad;
-        this.dia_rutina = dia_rutina;
-    }
 
-    public Ejercicio(String nombre, String descripcion, String grupo_muscular, int series, int repeticiones, String imagen, String dificultad, Set<DiaRutina> dia_rutina) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.grupo_muscular = grupo_muscular;
-        this.series = series;
-        this.repeticiones = repeticiones;
-        this.imagen = imagen;
-        this.dificultad = dificultad;
-        this.dia_rutina = dia_rutina;
-    }
 
     public Ejercicio() {
+    }
+
+
+    public String getUsernameCreador() {
+        return usernameCreador;
+    }
+
+    public void setUsernameCreador(String usernameCreador) {
+        this.usernameCreador = usernameCreador;
+    }
+
+    public Ejercicio(Long id, String usernameCreador, String nombre, String descripcion, String grupo_muscular, String imagen, String dificultad, Set<DiaRutina> dia_rutina) {
+        this.id = id;
+        this.usernameCreador = usernameCreador;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.grupo_muscular = grupo_muscular;
+        this.imagen = imagen;
+        this.dificultad = dificultad;
+        this.dia_rutina = dia_rutina;
+    }
+
+    public Ejercicio(String usernameCreador, String nombre, String descripcion, String grupo_muscular, String imagen, String dificultad, Set<DiaRutina> dia_rutina) {
+        this.usernameCreador = usernameCreador;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.grupo_muscular = grupo_muscular;
+        this.imagen = imagen;
+        this.dificultad = dificultad;
+        this.dia_rutina = dia_rutina;
+    }
+
+    public Ejercicio(String usernameCreador,String nombre, String descripcion, String grupo_muscular, String imagen, String dificultad) {
+        this.usernameCreador=usernameCreador;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.grupo_muscular = grupo_muscular;
+        this.imagen = imagen;
+        this.dificultad = dificultad;
     }
 }

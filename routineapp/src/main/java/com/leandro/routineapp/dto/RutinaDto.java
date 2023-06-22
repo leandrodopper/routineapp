@@ -11,6 +11,9 @@ public class RutinaDto {
     private String descripcion;
     private List<DiaRutina> dias_rutina;
 
+    private String creador;
+    private double puntuacion;
+
     public Long getId() {
         return id;
     }
@@ -43,17 +46,38 @@ public class RutinaDto {
         this.dias_rutina = dias_rutina;
     }
 
-    public RutinaDto(Long id, String nombre, String descripcion, List<DiaRutina> dias_rutina) {
+    public String getCreador() {
+        return creador;
+    }
+
+    public void setCreador(String creador) {
+        this.creador = creador;
+    }
+
+
+    public double getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(double puntuacion) {
+        this.puntuacion = puntuacion;
+    }
+
+    public RutinaDto(Long id, String nombre, String descripcion, List<DiaRutina> dias_rutina, String creador, double puntuacion) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.dias_rutina = dias_rutina;
+        this.creador = creador;
+        this.puntuacion = puntuacion;
     }
 
-    public RutinaDto(String nombre, String descripcion, List<DiaRutina> dias_rutina) {
+    public RutinaDto(String nombre, String descripcion, List<DiaRutina> dias_rutina, String creador, double puntuacion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.dias_rutina = dias_rutina;
+        this.creador = creador;
+        this.puntuacion = puntuacion;
     }
 
     public RutinaDto() {
