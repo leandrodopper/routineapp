@@ -9,6 +9,7 @@ import com.leandro.routineapp.repository.UsuarioRepositorio;
 import com.leandro.routineapp.service.RutinaServicio;
 import com.leandro.routineapp.utility.AppConstantes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,6 +81,26 @@ public class RutinaControlador {
         Optional<Usuario> usuario = usuarioRepositorio.findByUsernameOrEmail(username,username);
         List<RutinaDto> rutinas= rutinaServicio.obtenerRutinasSeguidasUsuario(usuario.get().getId());
         return ResponseEntity.ok(rutinas);
+    }
+
+    @GetMapping("/creadas_usuario")
+    public ResponseEntity<List<RutinaDto>> obtenerRutinasCreadasPorUsuario(HttpServletRequest request){
+        String token = request.getHeader("Authorization").substring(7);
+        String username = jwtTokenProvider.obtenerUsernameDelJWT(token);
+        Optional<Usuario> usuario = usuarioRepositorio.findByUsernameOrEmail(username,username);
+        List<RutinaDto> rutinas= rutinaServicio.obtenerRutinasCreadasUsuario(usuario.get().getId());
+        return ResponseEntity.ok(rutinas);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarRutina(@PathVariable(name = "id") long id){
+        rutinaServicio.eliminarRutina(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Message", "Rutina eliminada con éxito");
+
+        return ResponseEntity.noContent()
+                .headers(headers)
+                .build();
     }
 
 }

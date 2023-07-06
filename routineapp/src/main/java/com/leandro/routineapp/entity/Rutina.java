@@ -22,7 +22,6 @@ public class Rutina {
     private String descripcion;
 
     @OneToMany(mappedBy = "rutina", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<DiaRutina> dias_rutina;
 
     @Column(name="creador", nullable = false)

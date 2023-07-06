@@ -15,9 +15,13 @@ public interface RutinaServicio {
     public RutinaRespuesta obtenerRutinas(int numeroPagina, int tamanoPagina, String ordenarPor, String sortDir);
     public void eliminarRutina(Long id);
 
+    public RutinaDto actualizarRutina(RutinaDto rutinaDto, Long id);
+
     public void seguirRutina(Long id_rutina, Long id_usuario);
 
     public void dejarseguirRutina(Long id_rutina, Long id_usuario);
 
     public List<RutinaDto> obtenerRutinasSeguidasUsuario(Long id_usuario);
+
+    public List<RutinaDto> obtenerRutinasCreadasUsuario(Long id_usuario);
 }

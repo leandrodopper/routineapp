@@ -1,33 +1,11 @@
 package com.leandro.routineapp.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.leandro.routineapp.entity.Rutina;
-
 import java.util.List;
 
-public class DiaRutinaDto {
-    private Long id;
-    //@JsonIgnore
-    private Long id_rutina;
+public class ActualizarDiaRutinaDto {
     private String descripcion;
     private String nombre;
-    private List<EjercicioDiaRutinaDto> ejerciciosDiaRutina;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId_rutina() {
-        return id_rutina;
-    }
-
-    public void setId_rutina(Long id_rutina) {
-        this.id_rutina = id_rutina;
-    }
+    private  List<EjercicioDiaRutinaDto> ejerciciosDiaRutina;
 
     public String getDescripcion() {
         return descripcion;
@@ -51,8 +29,5 @@ public class DiaRutinaDto {
 
     public void setEjerciciosDiaRutina(List<EjercicioDiaRutinaDto> ejerciciosDiaRutina) {
         this.ejerciciosDiaRutina = ejerciciosDiaRutina;
-    }
-
-    public DiaRutinaDto() {
     }
 }

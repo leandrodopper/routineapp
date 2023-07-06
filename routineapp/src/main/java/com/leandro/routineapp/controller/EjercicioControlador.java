@@ -30,7 +30,7 @@ public class EjercicioControlador {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<EjercicioDto> guardarEjercicio(@RequestBody EjercicioDto ejercicioDto, HttpServletRequest request){
         String token = request.getHeader("Authorization").substring(7);
@@ -92,7 +92,7 @@ public class EjercicioControlador {
         return new ResponseEntity<>(ejercicioRespuesta,HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarEjercicio(@PathVariable(name = "id") long id){
         ejercicioServicio.eliminarEjercicio(id);

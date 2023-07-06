@@ -1,10 +1,9 @@
 package com.leandro.routineapp.service;
 
-import com.leandro.routineapp.dto.RutinaDto;
-import com.leandro.routineapp.dto.RutinaRespuesta;
-import com.leandro.routineapp.entity.Rutina;
-import com.leandro.routineapp.entity.Usuario;
+import com.leandro.routineapp.dto.*;
+import com.leandro.routineapp.entity.*;
 import com.leandro.routineapp.exceptions.ResourceNotFoundException;
+import com.leandro.routineapp.repository.EjercicioRepositorio;
 import com.leandro.routineapp.repository.RutinaRepositorio;
 import com.leandro.routineapp.repository.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +23,9 @@ public class RutinaServicioImpl implements RutinaServicio{
     private RutinaRepositorio rutinaRepositorio;
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+
+    @Autowired
+    private EjercicioRepositorio ejercicioRepositorio;
 
     @Override
     public RutinaDto crearRutina(RutinaDto rutinaDto) {
@@ -82,6 +82,12 @@ public class RutinaServicioImpl implements RutinaServicio{
                 .findById(id).orElseThrow(()-> new ResourceNotFoundException("Rutina", "id", id.toString()));
         rutinaRepositorio.delete(rutina);
     }
+
+    @Override
+    public RutinaDto actualizarRutina(RutinaDto rutinaDto, Long id) {
+        return null;
+    }
+
 
     @Override
     public void seguirRutina(Long id_rutina, Long id_usuario) {
@@ -141,15 +147,66 @@ public class RutinaServicioImpl implements RutinaServicio{
         }
     }
 
+    @Override
+    public List<RutinaDto> obtenerRutinasCreadasUsuario(Long id_usuario) {
+        Optional<Usuario> usuario_opt = usuarioRepositorio.findById(id_usuario);
+        List<Rutina> rutinas = new ArrayList<>();
+        List<RutinaDto> respuesta = new ArrayList<>();
+
+        if (usuario_opt.isPresent()){
+            rutinas=rutinaRepositorio.findByCreador(usuario_opt.get().getEmail());
+            for (Rutina rutina : rutinas){
+                respuesta.add(mapearDto(rutina));
+            }
+            return respuesta;
+        }else{
+            throw new ResourceNotFoundException("Usuario","usuario_id: ","");
+        }
+    }
+
 
     private RutinaDto mapearDto(Rutina rutina){
-        RutinaDto rutinaDto=new RutinaDto();
+        RutinaDto rutinaDto = new RutinaDto();
         rutinaDto.setId(rutina.getId());
         rutinaDto.setNombre(rutina.getNombre());
         rutinaDto.setDescripcion(rutina.getDescripcion());
-        rutinaDto.setDias_rutina(rutina.getDias_rutina());
         rutinaDto.setCreador(rutina.getCreador());
         rutinaDto.setPuntuacion(rutina.getPuntuacion());
+
+        List<DiaRutinaDto> diasRutinaDtoList = new ArrayList<>();
+
+        for (DiaRutina diaRutina : rutina.getDias_rutina()) {
+            DiaRutinaDto diaRutinaDto = new DiaRutinaDto();
+            diaRutinaDto.setId(diaRutina.getId());
+            diaRutinaDto.setId_rutina(rutina.getId());
+            diaRutinaDto.setDescripcion(diaRutina.getDescripcion());
+            diaRutinaDto.setNombre(diaRutina.getNombre());
+
+            List<EjercicioDiaRutinaDto> ejerciciosDiaRutinaDtoSet = new ArrayList<>();
+
+            for (EjercicioDiaRutina ejercicioDiaRutina : diaRutina.getEjerciciosDiaRutina()) {
+                EjercicioDiaRutinaDto ejercicioDiaRutinaDto = new EjercicioDiaRutinaDto();
+                ejercicioDiaRutinaDto.setId_EjercicioRutina(ejercicioDiaRutina.getId());
+                ejercicioDiaRutinaDto.setSeries(ejercicioDiaRutina.getSeries());
+                ejercicioDiaRutinaDto.setRepeticiones(ejercicioDiaRutina.getRepeticiones());
+
+                EjercicioDto ejercicioDto = new EjercicioDto();
+                ejercicioDto.setId(ejercicioDiaRutina.getEjercicio().getId());
+                ejercicioDto.setNombre(ejercicioDiaRutina.getEjercicio().getNombre());
+                ejercicioDto.setDescripcion(ejercicioDiaRutina.getEjercicio().getDescripcion());
+                ejercicioDto.setGrupo_muscular(ejercicioDiaRutina.getEjercicio().getGrupo_muscular());
+                ejercicioDto.setImagen(ejercicioDiaRutina.getEjercicio().getImagen());
+                ejercicioDto.setDificultad(ejercicioDiaRutina.getEjercicio().getDificultad());
+
+                ejercicioDiaRutinaDto.setEjercicioId(ejercicioDto.getId());
+                ejerciciosDiaRutinaDtoSet.add(ejercicioDiaRutinaDto);
+            }
+
+            diaRutinaDto.setEjerciciosDiaRutina(ejerciciosDiaRutinaDtoSet);
+            diasRutinaDtoList.add(diaRutinaDto);
+        }
+
+        rutinaDto.setDias_rutina(diasRutinaDtoList);
         return rutinaDto;
     }
 
@@ -158,9 +215,39 @@ public class RutinaServicioImpl implements RutinaServicio{
         Rutina rutina=new Rutina();
         rutina.setNombre(rutinaDto.getNombre());
         rutina.setDescripcion(rutinaDto.getDescripcion());
-        rutina.setDias_rutina(rutinaDto.getDias_rutina());
         rutina.setCreador(rutinaDto.getCreador());
         rutina.setPuntuacion(rutinaDto.getPuntuacion());
+        List<DiaRutina> diasRutina = new ArrayList<>();
+        for (DiaRutinaDto diaRutinaDto : rutinaDto.getDias_rutina()) {
+            DiaRutina diaRutina = new DiaRutina();
+            diaRutina.setId(diaRutinaDto.getId());
+            diaRutina.setNombre(diaRutinaDto.getNombre());
+            diaRutina.setDescripcion(diaRutinaDto.getDescripcion());
+
+            Set<EjercicioDiaRutina> ejerciciosDiaRutina = new HashSet<>();
+            for (EjercicioDiaRutinaDto ejercicioDiaRutinaDto : diaRutinaDto.getEjerciciosDiaRutina()) {
+                EjercicioDiaRutina ejercicioDiaRutina = new EjercicioDiaRutina();
+                ejercicioDiaRutina.setId(ejercicioDiaRutinaDto.getId_EjercicioRutina());
+                ejercicioDiaRutina.setSeries(ejercicioDiaRutinaDto.getSeries());
+                ejercicioDiaRutina.setRepeticiones(ejercicioDiaRutinaDto.getRepeticiones());
+
+                Ejercicio ejercicio = new Ejercicio();
+
+                ejercicio.setId(ejercicioDiaRutinaDto.getEjercicioId());
+                // Mapear los demás atributos del ejercicio
+
+                ejercicioDiaRutina.setEjercicio(ejercicio);
+                ejercicioDiaRutina.setDiaRutina(diaRutina);
+                ejerciciosDiaRutina.add(ejercicioDiaRutina);
+            }
+
+            diaRutina.setEjerciciosDiaRutina(ejerciciosDiaRutina);
+            diaRutina.setRutina(rutina);
+            diasRutina.add(diaRutina);
+        }
+
+        rutina.setDias_rutina(diasRutina);
+
         return rutina;
     }
 }

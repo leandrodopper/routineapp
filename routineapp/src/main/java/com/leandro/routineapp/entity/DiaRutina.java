@@ -1,6 +1,8 @@
 package com.leandro.routineapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,13 +22,10 @@ public class DiaRutina {
     private String descripcion;
     private String nombre;
 
-    @ManyToMany
-    @JoinTable(
-            name = "dia_rutina_ejercicios",
-            joinColumns = @JoinColumn(name = "dia_rutina_id"),
-            inverseJoinColumns = @JoinColumn(name = "ejercicio_id")
-    )
-    private Set<Ejercicio> ejercicios;
+
+    @OneToMany(mappedBy = "diaRutina", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("diaRutina")
+    private Set<EjercicioDiaRutina> ejerciciosDiaRutina;
 
     public Long getId() {
         return id;
@@ -60,29 +59,24 @@ public class DiaRutina {
         this.nombre = nombre;
     }
 
-    public Set<Ejercicio> getEjercicios() {
-        return ejercicios;
+    public Set<EjercicioDiaRutina> getEjerciciosDiaRutina() {
+        return ejerciciosDiaRutina;
     }
 
-    public void setEjercicios(Set<Ejercicio> ejercicios) {
-        this.ejercicios = ejercicios;
-    }
-
-    public DiaRutina(Long id, Rutina rutina, String descripcion, String nombre, Set<Ejercicio> ejercicios) {
-        this.id = id;
-        this.rutina = rutina;
-        this.descripcion = descripcion;
-        this.nombre = nombre;
-        this.ejercicios = ejercicios;
-    }
-
-    public DiaRutina(Rutina rutina, String descripcion, String nombre, Set<Ejercicio> ejercicios) {
-        this.rutina = rutina;
-        this.descripcion = descripcion;
-        this.nombre = nombre;
-        this.ejercicios = ejercicios;
+    public void setEjerciciosDiaRutina(Set<EjercicioDiaRutina> ejerciciosDiaRutina) {
+        this.ejerciciosDiaRutina = ejerciciosDiaRutina;
     }
 
     public DiaRutina() {
+    }
+
+    public void addEjercicioDiaRutina(EjercicioDiaRutina ejercicioDiaRutina) {
+        ejerciciosDiaRutina.add(ejercicioDiaRutina);
+        ejercicioDiaRutina.setDiaRutina(this);
+    }
+
+    public void removeEjercicioDiaRutina(EjercicioDiaRutina ejercicioDiaRutina) {
+        ejerciciosDiaRutina.remove(ejercicioDiaRutina);
+        ejercicioDiaRutina.setDiaRutina(null);
     }
 }
