@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/diasrutina")
 public class DiaRutinaControlador {
@@ -41,6 +43,11 @@ public class DiaRutinaControlador {
     @PostMapping("/{id}/addEjercicio")
     public ResponseEntity<DiaRutinaDto> addEjercicio (@PathVariable(name = "id") long id, @RequestBody EjercicioDiaRutinaDto ejercicioDiaRutinaDto){
         return ResponseEntity.ok(diaRutinaServicio.addEjercicioADia(ejercicioDiaRutinaDto,id));
+    }
+
+    @PostMapping("/{id}/addListEjercicios")
+    public ResponseEntity<DiaRutinaDto> addEjercicioList (@PathVariable(name = "id") long id, @RequestBody List<EjercicioDiaRutinaDto> ejerciciosDiaRutinaDto){
+        return ResponseEntity.ok(diaRutinaServicio.addEjercicioADiaList(ejerciciosDiaRutinaDto,id));
     }
 
     @DeleteMapping("/{id}/removeEjercicio/{id_ejercicio}")

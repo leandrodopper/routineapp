@@ -102,6 +102,21 @@ public class DiaRutinaServicioImpl implements DiaRutinaServicio{
     }
 
     @Override
+    public DiaRutinaDto addEjercicioADiaList(List<EjercicioDiaRutinaDto> ejerciciosDiaRutinaDto, Long id) {
+        DiaRutina diaRutina = diaRutinaRepositorio.findById(id).orElseThrow(()-> new ResourceNotFoundException("DiaRutina", "id", id.toString()));
+        List<EjercicioDiaRutina> aux = new ArrayList<>();
+        for (EjercicioDiaRutinaDto ejercicioDiaRutinaDto : ejerciciosDiaRutinaDto){
+            aux.add(toEntityEjercicioDiaRutina(ejercicioDiaRutinaDto));
+        }
+        for (EjercicioDiaRutina addEjercicio: aux){
+            diaRutina.addEjercicioDiaRutina(addEjercicio);
+        }
+
+        DiaRutina diaRutinaActualizado = diaRutinaRepositorio.save(diaRutina);
+        return mapearDto(diaRutinaActualizado);
+    }
+
+    @Override
     public DiaRutinaDto deleteEjercicioDeDia(Long idDiaRutina, Long idEjercicioDiaRutina) {
         EjercicioDiaRutina ejercicioDiaRutina = ejercicioDiaRutinaRepositorio.getById(idEjercicioDiaRutina);
         DiaRutina diaRutina = diaRutinaRepositorio.findById(idDiaRutina).orElseThrow(()-> new ResourceNotFoundException("DiaRutina", "id", idDiaRutina.toString()));

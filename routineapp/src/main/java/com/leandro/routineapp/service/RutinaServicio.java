@@ -24,4 +24,6 @@ public interface RutinaServicio {
     public List<RutinaDto> obtenerRutinasSeguidasUsuario(Long id_usuario);
 
     public List<RutinaDto> obtenerRutinasCreadasUsuario(Long id_usuario);
+
+    public List<RutinaDto> obtenerRutinasPorNombre(String nombre);
 }

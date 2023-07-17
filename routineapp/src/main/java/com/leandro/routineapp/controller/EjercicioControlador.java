@@ -70,6 +70,17 @@ public class EjercicioControlador {
         return ejercicioServicio.filtrarPorNombre(numeroPagina, tamanoPagina, ordenarPor, sortDir, nombre);
     }
 
+    @GetMapping("/filtrarKeyword")
+    public EjercicioRespuesta filtrarEjerciciosPorKeyword(
+            @RequestParam(value = "keyword") String keyword,
+            @RequestParam(value = "pageNo", defaultValue = AppConstantes.NUMERO_DE_PAGINA_POR_DEFECTO, required = false) int numeroPagina,
+            @RequestParam(value = "pageSize", defaultValue = AppConstantes.TAMANO_DE_PAGINA_POR_DEFECTO, required = false) int tamanoPagina,
+            @RequestParam(value = "sortBy", defaultValue = AppConstantes.ORDENAR_POR_DEFECTO, required = false) String ordenarPor,
+            @RequestParam(value = "sortDir", defaultValue = AppConstantes.ORDENAR_DIRECCION_POR_DEFECTO, required = false) String sortDir) {
+
+        return ejercicioServicio.filtrarPorNombreYGrupoMuscular(numeroPagina, tamanoPagina, ordenarPor, sortDir, keyword);
+    }
+
     @GetMapping("/filtrarCreador")
     public EjercicioRespuesta filtrarEjerciciosPorCreador(
             @RequestParam(value = "username_creador") String username_creador,

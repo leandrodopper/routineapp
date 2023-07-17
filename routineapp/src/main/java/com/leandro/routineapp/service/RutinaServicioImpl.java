@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.Normalizer;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -80,12 +81,25 @@ public class RutinaServicioImpl implements RutinaServicio{
     public void eliminarRutina(Long id) {
         Rutina rutina  = rutinaRepositorio
                 .findById(id).orElseThrow(()-> new ResourceNotFoundException("Rutina", "id", id.toString()));
+
+        List<Usuario> usuarios = rutina.getSeguidores();
+
+        for (Usuario usuario : usuarios){
+            usuario.getRutinasSeguidas().remove(rutina);
+            usuarioRepositorio.save(usuario);
+        }
         rutinaRepositorio.delete(rutina);
     }
 
     @Override
     public RutinaDto actualizarRutina(RutinaDto rutinaDto, Long id) {
-        return null;
+        Rutina rutina = new Rutina();
+        rutina = rutinaRepositorio.getById(id);
+        rutina.setNombre(rutinaDto.getNombre());
+        rutina.setDescripcion(rutinaDto.getDescripcion());
+        Rutina rutinaActualizada = rutinaRepositorio.save(rutina);
+        RutinaDto repsuesta = mapearDto(rutinaActualizada);
+        return repsuesta;
     }
 
 
@@ -162,6 +176,22 @@ public class RutinaServicioImpl implements RutinaServicio{
         }else{
             throw new ResourceNotFoundException("Usuario","usuario_id: ","");
         }
+    }
+
+    @Override
+    public List<RutinaDto> obtenerRutinasPorNombre(String nombre) {
+        List<Rutina> rutinas = new ArrayList<>();
+        rutinas = rutinaRepositorio.findByNombreContainingIgnoreCase(removerTildes(nombre));
+        List<RutinaDto> rutinas_resp = new ArrayList<>();
+        for (Rutina rutina : rutinas){
+            rutinas_resp.add(mapearDto(rutina));
+        }
+        return rutinas_resp;
+    }
+
+    private String removerTildes(String input) {
+        String normalized = Normalizer.normalize(input, Normalizer.Form.NFD);
+        return normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
 

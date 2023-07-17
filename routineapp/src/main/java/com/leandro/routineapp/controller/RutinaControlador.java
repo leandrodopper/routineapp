@@ -1,5 +1,6 @@
 package com.leandro.routineapp.controller;
 
+import com.leandro.routineapp.dto.EjercicioDiaRutinaDto;
 import com.leandro.routineapp.dto.RutinaDto;
 import com.leandro.routineapp.dto.RutinaRespuesta;
 import com.leandro.routineapp.entity.Usuario;
@@ -101,6 +102,16 @@ public class RutinaControlador {
         return ResponseEntity.noContent()
                 .headers(headers)
                 .build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RutinaDto> actualizarRutina(@PathVariable(name="id") long id, @RequestBody RutinaDto rutinaDto){
+       return ResponseEntity.ok(rutinaServicio.actualizarRutina(rutinaDto,id));
+    }
+
+    @GetMapping("/filtrarNombre")
+    public ResponseEntity<List<RutinaDto>> filtrarPorNombre(@RequestParam(name = "nombre") String nombre){
+        return ResponseEntity.ok(rutinaServicio.obtenerRutinasPorNombre(nombre));
     }
 
 }

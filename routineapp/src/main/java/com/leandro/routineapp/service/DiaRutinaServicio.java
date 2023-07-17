@@ -5,6 +5,8 @@ import com.leandro.routineapp.dto.DiaRutinaDto;
 import com.leandro.routineapp.dto.EjercicioDiaRutinaDto;
 import com.leandro.routineapp.entity.EjercicioDiaRutina;
 
+import java.util.List;
+
 public interface DiaRutinaServicio {
 
     public DiaRutinaDto crearDiarutina(DiaRutinaDto diaRutinaDto);
@@ -13,5 +15,6 @@ public interface DiaRutinaServicio {
     public void eliminarDiarutina(Long id);
 
     public DiaRutinaDto addEjercicioADia(EjercicioDiaRutinaDto ejercicioDiaRutinaDto, Long id);
+    public DiaRutinaDto addEjercicioADiaList(List<EjercicioDiaRutinaDto> ejerciciosDiaRutinaDto, Long id);
     public DiaRutinaDto deleteEjercicioDeDia(Long idDiaRutina, Long idEjercicioDiaRutina);
 }
