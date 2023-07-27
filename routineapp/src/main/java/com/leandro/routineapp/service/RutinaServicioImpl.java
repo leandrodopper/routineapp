@@ -31,8 +31,8 @@ public class RutinaServicioImpl implements RutinaServicio{
     @Override
     public RutinaDto crearRutina(RutinaDto rutinaDto) {
         Rutina rutina = mapearEntidad(rutinaDto);
+        rutina.setNumPuntuaciones(0L);
         Rutina nuevaRutina = rutinaRepositorio.save(rutina);
-
         RutinaDto rutinaRespuesta=mapearDto(nuevaRutina);
         return rutinaRespuesta;
     }
@@ -187,6 +187,21 @@ public class RutinaServicioImpl implements RutinaServicio{
             rutinas_resp.add(mapearDto(rutina));
         }
         return rutinas_resp;
+    }
+
+    @Override
+    public RutinaDto puntuarRutina(Long id, double puntuacion) {
+        if(puntuacion<0 || puntuacion>5){
+            throw new IllegalArgumentException("La puntuación debe ser un valor entre 0 y 5");
+        }
+        Rutina rutina = rutinaRepositorio.getById(id);
+        Long numPuntuaciones = rutina.getNumPuntuaciones();
+        double puntActual = rutina.getPuntuacion();
+        double nuevaPunt = ((puntActual * numPuntuaciones)+puntuacion)/(numPuntuaciones+1);
+        rutina.setPuntuacion(nuevaPunt);
+        rutina.setNumPuntuaciones(numPuntuaciones+1);
+        rutinaRepositorio.save(rutina);
+        return mapearDto(rutina);
     }
 
     private String removerTildes(String input) {

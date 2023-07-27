@@ -1,13 +1,10 @@
 package com.leandro.routineapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 @Table(name="rutina")
@@ -32,6 +29,9 @@ public class Rutina {
 
     @ManyToMany(mappedBy = "rutinasSeguidas", fetch = FetchType.LAZY)
     private List<Usuario> seguidores;
+
+    private Long numPuntuaciones;
+
 
     public String getCreador() {
         return creador;
@@ -89,23 +89,16 @@ public class Rutina {
         this.seguidores = seguidores;
     }
 
-    public Rutina(Long id, String nombre, String descripcion, List<DiaRutina> dias_rutina, String creador, double puntuacion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.dias_rutina = dias_rutina;
-        this.creador = creador;
-        this.puntuacion = puntuacion;
-
+    public Long getNumPuntuaciones() {
+        return numPuntuaciones;
     }
 
-    public Rutina(String nombre, String descripcion, List<DiaRutina> dias_rutina, String creador, double puntuacion) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.dias_rutina = dias_rutina;
-        this.creador = creador;
-        this.puntuacion = puntuacion;
+    public void setNumPuntuaciones(Long numPuntuaciones) {
+        this.numPuntuaciones = numPuntuaciones;
     }
+
+
+
 
     public Rutina() {
     }

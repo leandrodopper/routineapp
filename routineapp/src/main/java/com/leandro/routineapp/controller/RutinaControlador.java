@@ -114,4 +114,8 @@ public class RutinaControlador {
         return ResponseEntity.ok(rutinaServicio.obtenerRutinasPorNombre(nombre));
     }
 
+    @PostMapping("/puntuarRutina/{id}")
+    public ResponseEntity<RutinaDto> puntuarRutina(@PathVariable(name = "id") long id, @RequestParam Double puntuacion){
+        return ResponseEntity.ok(rutinaServicio.puntuarRutina(id,puntuacion));
+    }
 }

@@ -26,4 +26,6 @@ public interface RutinaServicio {
     public List<RutinaDto> obtenerRutinasCreadasUsuario(Long id_usuario);
 
     public List<RutinaDto> obtenerRutinasPorNombre(String nombre);
+
+    public RutinaDto puntuarRutina(Long id, double puntuacion);
 }
