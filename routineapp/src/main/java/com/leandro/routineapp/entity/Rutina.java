@@ -30,6 +30,9 @@ public class Rutina {
     @ManyToMany(mappedBy = "rutinasSeguidas", fetch = FetchType.LAZY)
     private List<Usuario> seguidores;
 
+    @OneToMany(mappedBy = "rutina", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comentario> comentarios;
+
     private Long numPuntuaciones;
 
 
@@ -97,8 +100,13 @@ public class Rutina {
         this.numPuntuaciones = numPuntuaciones;
     }
 
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
 
-
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
 
     public Rutina() {
     }
