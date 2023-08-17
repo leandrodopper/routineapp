@@ -5,8 +5,10 @@ import com.leandro.routineapp.entity.*;
 import com.leandro.routineapp.exceptions.ResourceNotFoundException;
 import com.leandro.routineapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -91,6 +93,28 @@ public class EntrenamientoServicioImpl implements EntrenamientoServicio{
         return resultado;
     }
 
+    @Override
+    public GetTiemposDto obtenerTiemposUsuario(Long usuario_id) {
+        Optional<Usuario> usuario = usuarioRepositorio.findById(usuario_id);
+        if(usuario.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el usuario con id: "+usuario_id);
+        }
+
+        List<Object[]> resultados = entrenamientoRepositorio.obtenerTiemposDeEntrenamientoPorUsuario(usuario_id);
+
+
+        Object[] primerResultado = resultados.get(0);
+
+        Integer maximo = (Integer) primerResultado[0];
+        Integer minimo = (Integer) primerResultado[1];
+        Double promedio = (Double) primerResultado[2];
+
+        GetTiemposDto tiempos = new GetTiemposDto();
+        tiempos.setMaximo(maximo);
+        tiempos.setMinimo(minimo);
+        tiempos.setPromedio(promedio);
+        return tiempos;
+    }
 
 
     public Entrenamiento convertirDtoAEntrenamiento(EntrenamientoDto entrenamientoDto) {

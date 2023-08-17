@@ -123,5 +123,32 @@ public class AuthControlador {
         }
     }
 
+    @PostMapping("/agregar-rol")
+    public ResponseEntity<?> agregarRolAUsuario(@RequestParam Long usuarioId, @RequestParam String nuevoRol) {
+        Optional<Usuario> optionalUsuario = usuarioRepositorio.findById(usuarioId);
+
+        if (optionalUsuario.isEmpty()) {
+            return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        Usuario usuario = optionalUsuario.get();
+
+        Rol rol = rolRepositorio.findByNombre(nuevoRol).orElse(null);
+
+        if (rol == null) {
+            return new ResponseEntity<>("Rol no encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        if (usuario.getRoles().contains(rol)) {
+            return new ResponseEntity<>("El usuario ya tiene este rol", HttpStatus.BAD_REQUEST);
+        }
+
+        usuario.getRoles().add(rol);
+        usuarioRepositorio.save(usuario);
+
+        return new ResponseEntity<>("Rol agregado exitosamente", HttpStatus.OK);
+    }
+
+
 
 }

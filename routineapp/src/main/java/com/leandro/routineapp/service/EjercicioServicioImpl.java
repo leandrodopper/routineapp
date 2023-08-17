@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -335,6 +336,21 @@ public class EjercicioServicioImpl implements EjercicioServicio{
         ejercicioRespuesta.setUltima(numeroPagina == totalPaginas - 1);
 
         return ejercicioRespuesta;
+    }
+
+    @Override
+    public List<String> obtenerListaNombresEjercicios() {
+        return ejercicioRepositorio.findAllNombres();
+    }
+
+    @Override
+    public ResponseEntity<EjercicioDto> buscarPorNombreExacto(String nombre) {
+
+        Ejercicio ejercicio=ejercicioRepositorio.findByNombre(nombre);
+        if (ejercicio==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(mapearDto(ejercicio));
     }
 
 

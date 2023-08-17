@@ -6,6 +6,8 @@ import com.leandro.routineapp.repository.SerieEntrenamientoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SerieEntrenamientoServicioImpl implements SerieEntrenamientoServicio {
 
@@ -14,13 +16,12 @@ public class SerieEntrenamientoServicioImpl implements SerieEntrenamientoServici
 
 
     @Override
-    public SerieEntrenamientoDto guardarSerieEntrenamiento(SerieEntrenamientoDto serieEntrenamientoDto) {
-        SerieEntrenamiento serieEntrenamiento=new SerieEntrenamiento();
-        /*serieEntrenamiento.setEntrenamientoEjercicio();
-        serieEntrenamiento.setNumeroSerie();
-        serieEntrenamiento.setRepeticionesRealizadas();
-        serieEntrenamiento.setPesoUtilizado();
-        serieEntrenamiento.setObjetivoCumplido();*/
-        return null;
+    public List<Object[]> obtenerDatosEjercicioPorUsuario(Long usuario_id, Long ejercicio_id) {
+        return serieEntrenamientoRepositorio.obtenerProgresoPorUsuarioYEjercicio(usuario_id,ejercicio_id);
+    }
+
+    @Override
+    public List<Object[]> obtenerPorcentajePorMusculo(Long usuario_id) {
+        return serieEntrenamientoRepositorio.obtenerTotalSeriesPorGrupoMuscular(usuario_id);
     }
 }

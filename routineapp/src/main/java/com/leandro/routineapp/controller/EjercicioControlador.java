@@ -110,4 +110,14 @@ public class EjercicioControlador {
         return new ResponseEntity<>("Ejercicio eliminado con exito", HttpStatus.OK);
     }
 
+    @GetMapping("/nombres")
+    public List<String> obtenerNombres(){
+        return ejercicioServicio.obtenerListaNombresEjercicios();
+    }
+
+    @GetMapping("/buscarNombre/{nombre}") // La ruta incluye el parámetro {nombre} en la URL
+    public ResponseEntity<EjercicioDto> buscarPorNombreExacto(@PathVariable String nombre) {
+        return ejercicioServicio.buscarPorNombreExacto(nombre);
+    }
+
 }

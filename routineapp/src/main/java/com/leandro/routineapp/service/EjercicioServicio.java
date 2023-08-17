@@ -2,9 +2,9 @@ package com.leandro.routineapp.service;
 
 import com.leandro.routineapp.dto.EjercicioDto;
 import com.leandro.routineapp.dto.EjercicioRespuesta;
+import org.springframework.http.ResponseEntity;
 
-
-
+import java.util.List;
 
 
 public interface EjercicioServicio {
@@ -19,4 +19,8 @@ public interface EjercicioServicio {
     public EjercicioRespuesta filtrarPorNombre(int numeroPagina, int tamanoPagina, String ordenarPor, String sortDir,String nombre);
     public EjercicioRespuesta filtrarPorCreador(int numeroPagina, int tamanoPagina, String ordenarPor, String sortDir,String creador);
     public EjercicioRespuesta filtrarPorNombreYGrupoMuscular(int numeroPagina, int tamanoPagina, String ordenarPor, String sortDir,String filtro);
+
+    public List<String> obtenerListaNombresEjercicios();
+
+    public ResponseEntity<EjercicioDto> buscarPorNombreExacto(String nombre);
 }
