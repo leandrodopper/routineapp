@@ -6,7 +6,7 @@ import com.leandro.routineapp.dto.GuardarEntrenoDto;
 import com.leandro.routineapp.entity.Entrenamiento;
 
 public interface EntrenamientoServicio {
-    EntrenamientoDto guardarEntrenamiento(GuardarEntrenoDto entrenamientodto, Long id_usuario);
+    public EntrenamientoDto guardarEntrenamiento(GuardarEntrenoDto entrenamientodto, Long id_usuario);
 
-    GetTiemposDto obtenerTiemposUsuario (Long usuario_id);
+    public GetTiemposDto obtenerTiemposUsuario (Long usuario_id);
 }

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface EntrenamientoEjercicioServicio {
 
-    List<Integer> obtenerEsfuerzosPorUsuarioYEjercicio(Long id_usuario, Long id_ejercicio);
+    public List<Integer> obtenerEsfuerzosPorUsuarioYEjercicio(Long id_usuario, Long id_ejercicio);
 
 }

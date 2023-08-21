@@ -1,6 +1,7 @@
 package com.leandro.routineapp.controller;
 
 import com.leandro.routineapp.dto.AuthResponse;
+import com.leandro.routineapp.dto.EditarUsuarioDto;
 import com.leandro.routineapp.dto.LoginDto;
 import com.leandro.routineapp.dto.RegistroDto;
 import com.leandro.routineapp.entity.Rol;
@@ -107,6 +108,39 @@ public class AuthControlador {
 
         usuarioRepositorio.save(usuario);
         return new ResponseEntity<>(usuario,HttpStatus.OK);
+    }
+
+    @PutMapping("/actualizar/userId/{userId}")
+    public ResponseEntity<?> actualizarUsuario(@PathVariable Long userId, @RequestBody EditarUsuarioDto editarUsuarioDto){
+        Optional<Usuario> usuarioOptional = usuarioRepositorio.findById(userId);
+
+        if(usuarioOptional.isEmpty()){
+            return new ResponseEntity<>("Usuario con id:"+userId+" no encontrado",HttpStatus.NOT_FOUND);
+        }
+
+        Usuario usuario = usuarioOptional.get();
+        usuario.setNombre(editarUsuarioDto.getNombre());
+        usuario.setApellidos(editarUsuarioDto.getApellidos());
+        usuario.setTelefono(editarUsuarioDto.getTelefono());
+        usuario.setAltura(editarUsuarioDto.getAltura());
+        usuario.setPeso(editarUsuarioDto.getPeso());
+        usuario.setEdad(editarUsuarioDto.getEdad());
+
+        Usuario usuarioresp= usuarioRepositorio.save(usuario);
+        return new ResponseEntity<>(usuarioresp,HttpStatus.OK);
+    }
+
+    @PutMapping("/actualizarPass/userId/{userId}")
+    public ResponseEntity<?> changePass (@PathVariable Long userId, @RequestBody String password){
+        Optional<Usuario> usuarioOptional = usuarioRepositorio.findById(userId);
+        if(usuarioOptional.isEmpty()){
+            return new ResponseEntity<>("Usuario con id:"+userId+" no encontrado",HttpStatus.NOT_FOUND);
+        }
+        Usuario usuario=usuarioOptional.get();
+        usuario.setPassword(passwordEncoder.encode(password));
+
+        usuarioRepositorio.save(usuario);
+        return new ResponseEntity<>("Contraseña cambiada exitosamente", HttpStatus.OK);
     }
 
     @GetMapping("/validarToken")

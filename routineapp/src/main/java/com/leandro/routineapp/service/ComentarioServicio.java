@@ -2,7 +2,7 @@ package com.leandro.routineapp.service;
 
 import com.leandro.routineapp.dto.ComentarioDto;
 import com.leandro.routineapp.dto.ComentarioRespuesta;
-import com.leandro.routineapp.entity.Comentario;
+
 
 
 public interface ComentarioServicio {
