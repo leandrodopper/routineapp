@@ -1,9 +1,6 @@
 package com.leandro.routineapp.controller;
 
-import com.leandro.routineapp.dto.AuthResponse;
-import com.leandro.routineapp.dto.EditarUsuarioDto;
-import com.leandro.routineapp.dto.LoginDto;
-import com.leandro.routineapp.dto.RegistroDto;
+import com.leandro.routineapp.dto.*;
 import com.leandro.routineapp.entity.Rol;
 import com.leandro.routineapp.entity.Usuario;
 import com.leandro.routineapp.exceptions.RoutineAppException;
@@ -13,6 +10,7 @@ import com.leandro.routineapp.repository.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -181,6 +179,32 @@ public class AuthControlador {
         usuarioRepositorio.save(usuario);
 
         return new ResponseEntity<>("Rol agregado exitosamente", HttpStatus.OK);
+    }
+
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/username")
+    public ResponseEntity<?> getUsuarioPorUsername(@RequestParam String username) {
+        Optional<Usuario> optionalUsuario = usuarioRepositorio.findByUsername(username);
+
+        if (optionalUsuario.isEmpty()) {
+            return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        Usuario usuario = optionalUsuario.get();
+
+        UsuarioDto usuarioDto = new UsuarioDto();
+        usuarioDto.setId(usuario.getId());
+        usuarioDto.setEmail(usuario.getEmail());
+        usuarioDto.setUsername(usuario.getUsername());
+        usuarioDto.setNombre(usuario.getNombre());
+        usuarioDto.setApellidos(usuario.getApellidos());
+        usuarioDto.setEdad(usuario.getEdad());
+        usuarioDto.setAltura(usuario.getAltura());
+        usuarioDto.setPeso(usuario.getPeso());
+        usuarioDto.setTelefono(usuario.getTelefono());
+        usuarioDto.setImagen(usuario.getImagen());
+        return new ResponseEntity<>(usuarioDto, HttpStatus.OK);
     }
 
 

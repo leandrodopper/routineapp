@@ -56,7 +56,7 @@ public class EntrenamientoEjercicioServicioImpl implements EntrenamientoEjercici
         return dto;
     }
 
-    private SerieEntrenamientoDto convertSerieEntrenamientoToDto(SerieEntrenamiento serie) {
+    public SerieEntrenamientoDto convertSerieEntrenamientoToDto(SerieEntrenamiento serie) {
         SerieEntrenamientoDto serieDto = new SerieEntrenamientoDto();
         serieDto.setId(serie.getId());
         serieDto.setEntrenamientoEjercicioId(serie.getEntrenamientoEjercicio().getId());

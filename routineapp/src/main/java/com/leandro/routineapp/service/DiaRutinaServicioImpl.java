@@ -127,7 +127,7 @@ public class DiaRutinaServicioImpl implements DiaRutinaServicio{
     }
 
     //Convertimos a Dto
-    private DiaRutinaDto mapearDto(DiaRutina diaRutina){
+    public DiaRutinaDto mapearDto(DiaRutina diaRutina){
         DiaRutinaDto diaRutinaDto = new DiaRutinaDto();
         diaRutinaDto.setId_rutina(diaRutina.getRutina().getId());
         diaRutinaDto.setId(diaRutina.getId());
@@ -145,7 +145,7 @@ public class DiaRutinaServicioImpl implements DiaRutinaServicio{
     }
 
     //Convertimos Dto a entidad
-    private DiaRutina mapearEntidad(DiaRutinaDto diaRutinaDto){
+    public DiaRutina mapearEntidad(DiaRutinaDto diaRutinaDto){
         DiaRutina diaRutina= new DiaRutina();
         diaRutina.setId(diaRutinaDto.getId());
         diaRutina.setNombre(diaRutinaDto.getNombre());
@@ -163,7 +163,7 @@ public class DiaRutinaServicioImpl implements DiaRutinaServicio{
         return diaRutina;
     }
 
-    private EjercicioDiaRutina toEntityEjercicioDiaRutina (EjercicioDiaRutinaDto ejercicioDiaRutinaDto){
+    public EjercicioDiaRutina toEntityEjercicioDiaRutina (EjercicioDiaRutinaDto ejercicioDiaRutinaDto){
         EjercicioDiaRutina ejercicioDiaRutina = new EjercicioDiaRutina();
         ejercicioDiaRutina.setId(ejercicioDiaRutinaDto.getId_EjercicioRutina());
         ejercicioDiaRutina.setRepeticiones(ejercicioDiaRutinaDto.getRepeticiones());
@@ -176,7 +176,7 @@ public class DiaRutinaServicioImpl implements DiaRutinaServicio{
         return ejercicioDiaRutina;
     }
 
-    private EjercicioDiaRutinaDto toEjercicioDiaRutinaDto(EjercicioDiaRutina ejercicioDiaRutina){
+    public EjercicioDiaRutinaDto toEjercicioDiaRutinaDto(EjercicioDiaRutina ejercicioDiaRutina){
         EjercicioDiaRutinaDto ejercicioDiaRutinaDto = new EjercicioDiaRutinaDto();
         ejercicioDiaRutinaDto.setId_EjercicioRutina(ejercicioDiaRutina.getId());
         ejercicioDiaRutinaDto.setEjercicioId(ejercicioDiaRutina.getEjercicio().getId());

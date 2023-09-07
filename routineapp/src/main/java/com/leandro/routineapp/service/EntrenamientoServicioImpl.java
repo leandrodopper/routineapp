@@ -142,7 +142,7 @@ public class EntrenamientoServicioImpl implements EntrenamientoServicio{
     }
 
 
-    private  EntrenamientoEjercicio convertirDtoAEntrenamientoEjercicio(EntrenamientoEjercicioDto entrenamientoEjercicioDto) {
+    public   EntrenamientoEjercicio convertirDtoAEntrenamientoEjercicio(EntrenamientoEjercicioDto entrenamientoEjercicioDto) {
         EntrenamientoEjercicio entrenamientoEjercicio = new EntrenamientoEjercicio();
         entrenamientoEjercicio.setId(entrenamientoEjercicioDto.getId());
         entrenamientoEjercicio.setNivelEsfuerzoPercibido(entrenamientoEjercicioDto.getNivelEsfuerzoPercibido());
@@ -164,7 +164,7 @@ public class EntrenamientoServicioImpl implements EntrenamientoServicio{
         return entrenamientoEjercicio;
     }
 
-    private  SerieEntrenamiento convertirDtoASerieEntrenamiento(SerieEntrenamientoDto serieDto) {
+    public   SerieEntrenamiento convertirDtoASerieEntrenamiento(SerieEntrenamientoDto serieDto) {
         SerieEntrenamiento serie = new SerieEntrenamiento();
         serie.setId(serieDto.getId());
         serie.setNumeroSerie(serieDto.getNumeroSerie());
@@ -174,7 +174,7 @@ public class EntrenamientoServicioImpl implements EntrenamientoServicio{
         return serie;
     }
 
-    private EntrenamientoDto convertirEntrenamientoADto(Entrenamiento entrenamiento){
+    public EntrenamientoDto convertirEntrenamientoADto(Entrenamiento entrenamiento){
         EntrenamientoDto entrenamientoDto = new EntrenamientoDto();
         entrenamientoDto.setId(entrenamiento.getId());
         entrenamientoDto.setUsuarioId(entrenamiento.getUsuario().getId());
@@ -194,7 +194,7 @@ public class EntrenamientoServicioImpl implements EntrenamientoServicio{
         return entrenamientoDto;
     }
 
-    private EntrenamientoEjercicioDto convertirEntrenamientoEjercicioADto(EntrenamientoEjercicio entrenamientoEjercicio) {
+    public EntrenamientoEjercicioDto convertirEntrenamientoEjercicioADto(EntrenamientoEjercicio entrenamientoEjercicio) {
         EntrenamientoEjercicioDto ejercicioDto = new EntrenamientoEjercicioDto();
         ejercicioDto.setId(entrenamientoEjercicio.getId());
         ejercicioDto.setNivelEsfuerzoPercibido(entrenamientoEjercicio.getNivelEsfuerzoPercibido());
@@ -213,7 +213,7 @@ public class EntrenamientoServicioImpl implements EntrenamientoServicio{
         return ejercicioDto;
     }
 
-    private SerieEntrenamientoDto convertirSerieEntrenamientoADto(SerieEntrenamiento serie) {
+    public SerieEntrenamientoDto convertirSerieEntrenamientoADto(SerieEntrenamiento serie) {
         SerieEntrenamientoDto serieDto = new SerieEntrenamientoDto();
         serieDto.setId(serie.getId());
         serieDto.setNumeroSerie(serie.getNumeroSerie());
