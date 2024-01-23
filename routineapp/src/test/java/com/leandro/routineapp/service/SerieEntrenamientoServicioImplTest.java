@@ -6,7 +6,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.leandro.routineapp.repository.SerieEntrenamientoRepositorio;
+import com.leandro.routineapp.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +18,32 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ContextConfiguration(classes = {SerieEntrenamientoServicioImpl.class})
+@ContextConfiguration(classes = {EntrenamientoServicioImpl.class})
 @ExtendWith(SpringExtension.class)
 class SerieEntrenamientoServicioImplTest {
     @MockBean
     private SerieEntrenamientoRepositorio serieEntrenamientoRepositorio;
 
     @Autowired
-    private SerieEntrenamientoServicioImpl serieEntrenamientoServicioImpl;
+    private EntrenamientoServicioImpl serieEntrenamientoServicioImpl;
+
+    @MockBean
+    private UsuarioRepositorio usuarioRepositorio;
+
+    @MockBean
+    private DiaRutinaRepositorio diaRutinaRepositorio;
+
+    @MockBean
+    private EjercicioRepositorio ejercicioRepositorio;
+
+    @MockBean
+    private EntrenamientoRepositorio entrenamientoRepositorio;
+
+    @MockBean
+    private EntrenamientoEjercicioRepositorio entrenamientoEjercicioRepositorio;
 
     /**
-     * Method under test: {@link SerieEntrenamientoServicioImpl#obtenerDatosEjercicioPorUsuario(Long, Long)}
+     * Method under test: {@link EntrenamientoServicioImpl#obtenerDatosEjercicioPorUsuario(Long, Long)}
      */
     @Test
     void testObtenerDatosEjercicioPorUsuario() {
@@ -43,7 +58,7 @@ class SerieEntrenamientoServicioImplTest {
     }
 
     /**
-     * Method under test: {@link SerieEntrenamientoServicioImpl#obtenerPorcentajePorMusculo(Long)}
+     * Method under test: {@link EntrenamientoServicioImpl#obtenerPorcentajePorMusculo(Long)}
      */
     @Test
     void testObtenerPorcentajePorMusculo() {

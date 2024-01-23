@@ -20,10 +20,7 @@ import com.leandro.routineapp.entity.Ejercicio;
 import com.leandro.routineapp.entity.EjercicioDiaRutina;
 import com.leandro.routineapp.entity.Rutina;
 import com.leandro.routineapp.exceptions.ResourceNotFoundException;
-import com.leandro.routineapp.repository.DiaRutinaRepositorio;
-import com.leandro.routineapp.repository.EjercicioDiaRutinaRepositorio;
-import com.leandro.routineapp.repository.EjercicioRepositorio;
-import com.leandro.routineapp.repository.RutinaRepositorio;
+import com.leandro.routineapp.repository.*;
 
 import java.sql.Timestamp;
 
@@ -41,14 +38,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ContextConfiguration(classes = {DiaRutinaServicioImpl.class})
+@ContextConfiguration(classes = {RutinaServicioImpl.class})
 @ExtendWith(SpringExtension.class)
 class DiaRutinaServicioImplTest {
     @MockBean
     private DiaRutinaRepositorio diaRutinaRepositorio;
 
     @Autowired
-    private DiaRutinaServicioImpl diaRutinaServicioImpl;
+    private RutinaServicioImpl diaRutinaServicioImpl;
 
     @MockBean
     private EjercicioDiaRutinaRepositorio ejercicioDiaRutinaRepositorio;
@@ -59,9 +56,10 @@ class DiaRutinaServicioImplTest {
     @MockBean
     private RutinaRepositorio rutinaRepositorio;
 
-    /**
-     * Method under test: {@link DiaRutinaServicioImpl#crearDiarutina(DiaRutinaDto)}
-     */
+    @MockBean
+    private UsuarioRepositorio usuarioRepositorio;
+
+
     @Test
     void testCrearDiarutina() {
         Rutina rutina = new Rutina();
@@ -112,9 +110,7 @@ class DiaRutinaServicioImplTest {
         verify(rutinaRepositorio).getById((Long) any());
     }
 
-    /**
-     * Method under test: {@link DiaRutinaServicioImpl#crearDiarutina(DiaRutinaDto)}
-     */
+
     @Test
     void testCrearDiarutina2() {
         Rutina rutina = new Rutina();
@@ -147,9 +143,7 @@ class DiaRutinaServicioImplTest {
         verify(rutinaRepositorio).getById((Long) any());
     }
 
-    /**
-     * Method under test: {@link DiaRutinaServicioImpl#crearDiarutina(DiaRutinaDto)}
-     */
+
     @Test
     void testCrearDiarutina3() {
         Rutina rutina = new Rutina();
@@ -244,7 +238,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#crearDiarutina(DiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#crearDiarutina(DiaRutinaDto)}
      */
     @Test
     void testCrearDiarutina4() {
@@ -319,7 +313,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#crearDiarutina(DiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#crearDiarutina(DiaRutinaDto)}
      */
     @Test
     @Disabled("TODO: Complete this test")
@@ -385,7 +379,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#crearDiarutina(DiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#crearDiarutina(DiaRutinaDto)}
      */
     @Test
     void testCrearDiarutina6() {
@@ -441,7 +435,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#obtenerDiarutina(Long)}
+     * Method under test: {@link RutinaServicioImpl#obtenerDiarutina(Long)}
      */
     @Test
     void testObtenerDiarutina() {
@@ -475,7 +469,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#obtenerDiarutina(Long)}
+     * Method under test: {@link RutinaServicioImpl#obtenerDiarutina(Long)}
      */
     @Test
     void testObtenerDiarutina2() {
@@ -552,7 +546,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#obtenerDiarutina(Long)}
+     * Method under test: {@link RutinaServicioImpl#obtenerDiarutina(Long)}
      */
     @Test
     @Disabled("TODO: Complete this test")
@@ -570,7 +564,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#obtenerDiarutina(Long)}
+     * Method under test: {@link RutinaServicioImpl#obtenerDiarutina(Long)}
      */
     @Test
     void testObtenerDiarutina4() {
@@ -580,7 +574,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#obtenerDiarutina(Long)}
+     * Method under test: {@link RutinaServicioImpl#obtenerDiarutina(Long)}
      */
     @Test
     void testObtenerDiarutina5() {
@@ -590,7 +584,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#actualizarDiarutina(ActualizarDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#actualizarDiarutina(ActualizarDiaRutinaDto, Long)}
      */
     @Test
     void testActualizarDiarutina() {
@@ -649,7 +643,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#actualizarDiarutina(ActualizarDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#actualizarDiarutina(ActualizarDiaRutinaDto, Long)}
      */
     @Test
     void testActualizarDiarutina2() {
@@ -684,7 +678,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#actualizarDiarutina(ActualizarDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#actualizarDiarutina(ActualizarDiaRutinaDto, Long)}
      */
     @Test
     void testActualizarDiarutina3() {
@@ -786,7 +780,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#actualizarDiarutina(ActualizarDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#actualizarDiarutina(ActualizarDiaRutinaDto, Long)}
      */
     @Test
     void testActualizarDiarutina4() {
@@ -929,7 +923,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#actualizarDiarutina(ActualizarDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#actualizarDiarutina(ActualizarDiaRutinaDto, Long)}
      */
     @Test
     void testActualizarDiarutina5() {
@@ -1030,7 +1024,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#eliminarDiarutina(Long)}
+     * Method under test: {@link RutinaServicioImpl#eliminarDiarutina(Long)}
      */
     @Test
     void testEliminarDiarutina() {
@@ -1060,7 +1054,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#eliminarDiarutina(Long)}
+     * Method under test: {@link RutinaServicioImpl#eliminarDiarutina(Long)}
      */
     @Test
     void testEliminarDiarutina2() {
@@ -1090,7 +1084,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#eliminarDiarutina(Long)}
+     * Method under test: {@link RutinaServicioImpl#eliminarDiarutina(Long)}
      */
     @Test
     void testEliminarDiarutina3() {
@@ -1101,7 +1095,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
      */
     @Test
     void testAddEjercicioADia() {
@@ -1174,7 +1168,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
      */
     @Test
     void testAddEjercicioADia2() {
@@ -1224,7 +1218,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
      */
     @Test
     void testAddEjercicioADia3() {
@@ -1340,7 +1334,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
      */
     @Test
     @Disabled("TODO: Complete this test")
@@ -1394,7 +1388,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
      */
     @Test
     void testAddEjercicioADia5() {
@@ -1441,7 +1435,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
      */
     @Test
     @Disabled("TODO: Complete this test")
@@ -1504,7 +1498,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
      */
     @Test
     void testAddEjercicioADia7() {
@@ -1560,7 +1554,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADia(EjercicioDiaRutinaDto, Long)}
      */
     @Test
     void testAddEjercicioADia8() {
@@ -1632,7 +1626,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADiaList(List, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADiaList(List, Long)}
      */
     @Test
     void testAddEjercicioADiaList() {
@@ -1687,7 +1681,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADiaList(List, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADiaList(List, Long)}
      */
     @Test
     void testAddEjercicioADiaList2() {
@@ -1718,7 +1712,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADiaList(List, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADiaList(List, Long)}
      */
     @Test
     void testAddEjercicioADiaList3() {
@@ -1816,7 +1810,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADiaList(List, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADiaList(List, Long)}
      */
     @Test
     @Disabled("TODO: Complete this test")
@@ -1852,7 +1846,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADiaList(List, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADiaList(List, Long)}
      */
     @Test
     void testAddEjercicioADiaList5() {
@@ -1881,7 +1875,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#addEjercicioADiaList(List, Long)}
+     * Method under test: {@link RutinaServicioImpl#addEjercicioADiaList(List, Long)}
      */
     @Test
     void testAddEjercicioADiaList6() {
@@ -1958,7 +1952,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#deleteEjercicioDeDia(Long, Long)}
+     * Method under test: {@link RutinaServicioImpl#deleteEjercicioDeDia(Long, Long)}
      */
     @Test
     void testDeleteEjercicioDeDia() {
@@ -2051,7 +2045,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#deleteEjercicioDeDia(Long, Long)}
+     * Method under test: {@link RutinaServicioImpl#deleteEjercicioDeDia(Long, Long)}
      */
     @Test
     void testDeleteEjercicioDeDia2() {
@@ -2103,7 +2097,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#deleteEjercicioDeDia(Long, Long)}
+     * Method under test: {@link RutinaServicioImpl#deleteEjercicioDeDia(Long, Long)}
      */
     @Test
     void testDeleteEjercicioDeDia3() {
@@ -2239,7 +2233,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#deleteEjercicioDeDia(Long, Long)}
+     * Method under test: {@link RutinaServicioImpl#deleteEjercicioDeDia(Long, Long)}
      */
     @Test
     @Disabled("TODO: Complete this test")
@@ -2312,7 +2306,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#deleteEjercicioDeDia(Long, Long)}
+     * Method under test: {@link RutinaServicioImpl#deleteEjercicioDeDia(Long, Long)}
      */
     @Test
     void testDeleteEjercicioDeDia5() {
@@ -2378,7 +2372,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#mapearDto(DiaRutina)}
+     * Method under test: {@link RutinaServicioImpl#mapearDto(DiaRutina)}
      */
     @Test
     void testMapearDto() {
@@ -2409,7 +2403,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#mapearDto(DiaRutina)}
+     * Method under test: {@link RutinaServicioImpl#mapearDto(DiaRutina)}
      */
     @Test
     void testMapearDto2() {
@@ -2483,7 +2477,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#mapearDto(DiaRutina)}
+     * Method under test: {@link RutinaServicioImpl#mapearDto(DiaRutina)}
      */
     @Test
     void testMapearDto3() {
@@ -2586,7 +2580,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
      */
     @Test
     void testMapearEntidad() {
@@ -2618,7 +2612,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
      */
     @Test
     void testMapearEntidad2() {
@@ -2672,7 +2666,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
      */
     @Test
     @Disabled("TODO: Complete this test")
@@ -2719,7 +2713,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
      */
     @Test
     void testMapearEntidad4() {
@@ -2757,7 +2751,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
      */
     @Test
     void testMapearEntidad5() {
@@ -2810,7 +2804,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#mapearEntidad(DiaRutinaDto)}
      */
     @Test
     void testMapearEntidad6() {
@@ -2848,7 +2842,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#toEntityEjercicioDiaRutina(EjercicioDiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#toEntityEjercicioDiaRutina(EjercicioDiaRutinaDto)}
      */
     @Test
     void testToEntityEjercicioDiaRutina() {
@@ -2879,7 +2873,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#toEntityEjercicioDiaRutina(EjercicioDiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#toEntityEjercicioDiaRutina(EjercicioDiaRutinaDto)}
      */
     @Test
     @Disabled("TODO: Complete this test")
@@ -2903,7 +2897,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#toEntityEjercicioDiaRutina(EjercicioDiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#toEntityEjercicioDiaRutina(EjercicioDiaRutinaDto)}
      */
     @Test
     void testToEntityEjercicioDiaRutina3() {
@@ -2920,7 +2914,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#toEntityEjercicioDiaRutina(EjercicioDiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#toEntityEjercicioDiaRutina(EjercicioDiaRutinaDto)}
      */
     @Test
     void testToEntityEjercicioDiaRutina4() {
@@ -2949,7 +2943,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#toEntityEjercicioDiaRutina(EjercicioDiaRutinaDto)}
+     * Method under test: {@link RutinaServicioImpl#toEntityEjercicioDiaRutina(EjercicioDiaRutinaDto)}
      */
     @Test
     void testToEntityEjercicioDiaRutina5() {
@@ -2966,7 +2960,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#toEjercicioDiaRutinaDto(EjercicioDiaRutina)}
+     * Method under test: {@link RutinaServicioImpl#toEjercicioDiaRutinaDto(EjercicioDiaRutina)}
      */
     @Test
     void testToEjercicioDiaRutinaDto() {
@@ -3013,7 +3007,7 @@ class DiaRutinaServicioImplTest {
     }
 
     /**
-     * Method under test: {@link DiaRutinaServicioImpl#toEjercicioDiaRutinaDto(EjercicioDiaRutina)}
+     * Method under test: {@link RutinaServicioImpl#toEjercicioDiaRutinaDto(EjercicioDiaRutina)}
      */
     @Test
     void testToEjercicioDiaRutinaDto2() {

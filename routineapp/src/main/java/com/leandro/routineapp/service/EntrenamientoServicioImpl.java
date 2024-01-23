@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EntrenamientoServicioImpl implements EntrenamientoServicio{
@@ -223,5 +224,55 @@ public class EntrenamientoServicioImpl implements EntrenamientoServicio{
 
 
         return serieDto;
+    }
+
+    @Override
+    public List<Integer> obtenerEsfuerzosPorUsuarioYEjercicio(Long id_usuario, Long id_ejercicio) {
+        Optional<Usuario> usuario= usuarioRepositorio.findById(id_usuario);
+        Optional<Ejercicio> ejercicio=ejercicioRepositorio.findById(id_ejercicio);
+
+        if(usuario.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el usuario con id: "+id_usuario);
+        }
+        if(ejercicio.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el ejercicio con id: "+ejercicio);
+        }
+        return entrenamientoEjercicioRepositorio.obtenerEsfuerzoPercibidoPorUsuarioYEjercicio(id_usuario,id_ejercicio);
+    }
+
+
+    public EntrenamientoEjercicioDto convertEntrenamientoEjercicioToDto(EntrenamientoEjercicio entity) {
+        EntrenamientoEjercicioDto dto = new EntrenamientoEjercicioDto();
+        dto.setId(entity.getId());
+        dto.setEntrenamientoId(entity.getEntrenamiento().getId());
+        dto.setEjercicioId(entity.getEjercicio().getId());
+        dto.setSeriesRealizadas(entity.getSeriesRealizadas()
+                .stream()
+                .map(this::convertSerieEntrenamientoToDto)
+                .collect(Collectors.toList()));
+        dto.setNivelEsfuerzoPercibido(entity.getNivelEsfuerzoPercibido());
+        return dto;
+    }
+
+    public SerieEntrenamientoDto convertSerieEntrenamientoToDto(SerieEntrenamiento serie) {
+        SerieEntrenamientoDto serieDto = new SerieEntrenamientoDto();
+        serieDto.setId(serie.getId());
+        serieDto.setEntrenamientoEjercicioId(serie.getEntrenamientoEjercicio().getId());
+        serieDto.setNumeroSerie(serie.getNumeroSerie());
+        serieDto.setPesoUtilizado(serie.getPesoUtilizado());
+        serieDto.setRepeticionesRealizadas(serie.getRepeticionesRealizadas());
+        serieDto.setObjetivoCumplido(serie.isObjetivoCumplido());
+        return serieDto;
+    }
+
+
+    @Override
+    public List<Object[]> obtenerDatosEjercicioPorUsuario(Long usuario_id, Long ejercicio_id) {
+        return serieEntrenamientoRepositorio.obtenerProgresoPorUsuarioYEjercicio(usuario_id,ejercicio_id);
+    }
+
+    @Override
+    public List<Object[]> obtenerPorcentajePorMusculo(Long usuario_id) {
+        return serieEntrenamientoRepositorio.obtenerTotalSeriesPorGrupoMuscular(usuario_id);
     }
 }

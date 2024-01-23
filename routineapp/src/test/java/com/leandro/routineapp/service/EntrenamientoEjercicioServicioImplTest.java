@@ -19,9 +19,7 @@ import com.leandro.routineapp.entity.EntrenamientoEjercicio;
 import com.leandro.routineapp.entity.Rutina;
 import com.leandro.routineapp.entity.SerieEntrenamiento;
 import com.leandro.routineapp.entity.Usuario;
-import com.leandro.routineapp.repository.EjercicioRepositorio;
-import com.leandro.routineapp.repository.EntrenamientoEjercicioRepositorio;
-import com.leandro.routineapp.repository.UsuarioRepositorio;
+import com.leandro.routineapp.repository.*;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -40,23 +38,32 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.server.ResponseStatusException;
 
-@ContextConfiguration(classes = {EntrenamientoEjercicioServicioImpl.class})
+@ContextConfiguration(classes = {EntrenamientoServicioImpl.class})
 @ExtendWith(SpringExtension.class)
 class EntrenamientoEjercicioServicioImplTest {
     @MockBean
     private EjercicioRepositorio ejercicioRepositorio;
 
     @MockBean
+    private DiaRutinaRepositorio diaRutinaRepositorio;
+
+    @MockBean
+    private EntrenamientoRepositorio entrenamientoRepositorio;
+
+    @MockBean
+    private SerieEntrenamientoRepositorio serieEntrenamientoRepositorio;
+
+    @MockBean
     private EntrenamientoEjercicioRepositorio entrenamientoEjercicioRepositorio;
 
     @Autowired
-    private EntrenamientoEjercicioServicioImpl entrenamientoEjercicioServicioImpl;
+    private EntrenamientoServicioImpl entrenamientoEjercicioServicioImpl;
 
     @MockBean
     private UsuarioRepositorio usuarioRepositorio;
 
     /**
-     * Method under test: {@link EntrenamientoEjercicioServicioImpl#obtenerEsfuerzosPorUsuarioYEjercicio(Long, Long)}
+     * Method under test: {@link EntrenamientoServicioImpl#obtenerEsfuerzosPorUsuarioYEjercicio(Long, Long)}
      */
     @Test
     void testObtenerEsfuerzosPorUsuarioYEjercicio() {
@@ -102,7 +109,7 @@ class EntrenamientoEjercicioServicioImplTest {
     }
 
     /**
-     * Method under test: {@link EntrenamientoEjercicioServicioImpl#obtenerEsfuerzosPorUsuarioYEjercicio(Long, Long)}
+     * Method under test: {@link EntrenamientoServicioImpl#obtenerEsfuerzosPorUsuarioYEjercicio(Long, Long)}
      */
     @Test
     void testObtenerEsfuerzosPorUsuarioYEjercicio2() {
@@ -145,7 +152,7 @@ class EntrenamientoEjercicioServicioImplTest {
     }
 
     /**
-     * Method under test: {@link EntrenamientoEjercicioServicioImpl#obtenerEsfuerzosPorUsuarioYEjercicio(Long, Long)}
+     * Method under test: {@link EntrenamientoServicioImpl#obtenerEsfuerzosPorUsuarioYEjercicio(Long, Long)}
      */
     @Test
     void testObtenerEsfuerzosPorUsuarioYEjercicio3() {
@@ -176,7 +183,7 @@ class EntrenamientoEjercicioServicioImplTest {
     }
 
     /**
-     * Method under test: {@link EntrenamientoEjercicioServicioImpl#obtenerEsfuerzosPorUsuarioYEjercicio(Long, Long)}
+     * Method under test: {@link EntrenamientoServicioImpl#obtenerEsfuerzosPorUsuarioYEjercicio(Long, Long)}
      */
     @Test
     void testObtenerEsfuerzosPorUsuarioYEjercicio4() {
@@ -201,7 +208,7 @@ class EntrenamientoEjercicioServicioImplTest {
     }
 
     /**
-     * Method under test: {@link EntrenamientoEjercicioServicioImpl#convertEntrenamientoEjercicioToDto(EntrenamientoEjercicio)}
+     * Method under test: {@link EntrenamientoServicioImpl#convertEntrenamientoEjercicioToDto(EntrenamientoEjercicio)}
      */
     @Test
     void testConvertEntrenamientoEjercicioToDto() {
@@ -273,7 +280,7 @@ class EntrenamientoEjercicioServicioImplTest {
     }
 
     /**
-     * Method under test: {@link EntrenamientoEjercicioServicioImpl#convertSerieEntrenamientoToDto(SerieEntrenamiento)}
+     * Method under test: {@link EntrenamientoServicioImpl#convertSerieEntrenamientoToDto(SerieEntrenamiento)}
      */
     @Test
     public void testConvertSerieEntrenamientoToDto() {

@@ -20,9 +20,7 @@ import com.leandro.routineapp.entity.EjercicioDiaRutina;
 import com.leandro.routineapp.entity.Rutina;
 import com.leandro.routineapp.entity.Usuario;
 import com.leandro.routineapp.exceptions.ResourceNotFoundException;
-import com.leandro.routineapp.repository.EjercicioRepositorio;
-import com.leandro.routineapp.repository.RutinaRepositorio;
-import com.leandro.routineapp.repository.UsuarioRepositorio;
+import com.leandro.routineapp.repository.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -54,6 +52,12 @@ class RutinaServicioImplTest {
 
     @MockBean
     private UsuarioRepositorio usuarioRepositorio;
+
+    @MockBean
+    private DiaRutinaRepositorio diaRutinaRepositorio;
+
+    @MockBean
+    private EjercicioDiaRutinaRepositorio ejercicioDiaRutinaRepositorio;
 
     /**
      * Method under test: {@link RutinaServicioImpl#crearRutina(RutinaDto)}

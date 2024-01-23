@@ -4,9 +4,7 @@ import com.leandro.routineapp.dto.*;
 import com.leandro.routineapp.entity.Usuario;
 import com.leandro.routineapp.jwt.JwtTokenProvider;
 import com.leandro.routineapp.repository.UsuarioRepositorio;
-import com.leandro.routineapp.service.EntrenamientoEjercicioServicio;
 import com.leandro.routineapp.service.EntrenamientoServicio;
-import com.leandro.routineapp.service.SerieEntrenamientoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +24,6 @@ public class EntrenamientoControlador {
     @Autowired
     private EntrenamientoServicio entrenamientoServicio;
 
-    @Autowired
-    private EntrenamientoEjercicioServicio entrenamientoEjercicioServicio;
-
-    @Autowired
-    private SerieEntrenamientoServicio serieEntrenamientoServicio;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -47,12 +40,12 @@ public class EntrenamientoControlador {
 
     @GetMapping("/usuario/{userId}/ejercicio/{exerciseId}")
     public List<Object[]> obtenerDatosEjercicioPorUsuario(@PathVariable Long userId, @PathVariable Long exerciseId) {
-        return serieEntrenamientoServicio.obtenerDatosEjercicioPorUsuario(userId,exerciseId);
+        return entrenamientoServicio.obtenerDatosEjercicioPorUsuario(userId,exerciseId);
     }
 
     @GetMapping("/esfuerzos/usuario/{userId}/ejercicio/{exerciseId}")
     public List<Integer> obtenerRPEsEjercicioPorUsuario(@PathVariable Long userId, @PathVariable Long exerciseId){
-        return entrenamientoEjercicioServicio.obtenerEsfuerzosPorUsuarioYEjercicio(userId,exerciseId);
+        return entrenamientoServicio.obtenerEsfuerzosPorUsuarioYEjercicio(userId,exerciseId);
     }
 
     @GetMapping("/tiempos/usuario/{userId}")
@@ -62,6 +55,6 @@ public class EntrenamientoControlador {
 
     @GetMapping("/grupos/usuario/{userId}")
     public List<Object[]> obtenerDatosMusculoPorUsuario(@PathVariable Long userId) {
-        return serieEntrenamientoServicio.obtenerPorcentajePorMusculo(userId);
+        return entrenamientoServicio.obtenerPorcentajePorMusculo(userId);
     }
 }

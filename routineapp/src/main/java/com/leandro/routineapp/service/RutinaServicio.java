@@ -1,8 +1,6 @@
 package com.leandro.routineapp.service;
 
-import com.leandro.routineapp.dto.EjercicioDto;
-import com.leandro.routineapp.dto.RutinaDto;
-import com.leandro.routineapp.dto.RutinaRespuesta;
+import com.leandro.routineapp.dto.*;
 import com.leandro.routineapp.entity.Rutina;
 import com.leandro.routineapp.entity.Usuario;
 
@@ -28,4 +26,13 @@ public interface RutinaServicio {
     public List<RutinaDto> obtenerRutinasPorNombre(String nombre);
 
     public RutinaDto puntuarRutina(Long id, double puntuacion);
+
+    public DiaRutinaDto crearDiarutina(DiaRutinaDto diaRutinaDto);
+    public DiaRutinaDto obtenerDiarutina(Long id);
+    public DiaRutinaDto actualizarDiarutina(ActualizarDiaRutinaDto actualizarDiaRutinaDto, Long id);
+    public void eliminarDiarutina(Long id);
+
+    public DiaRutinaDto addEjercicioADia(EjercicioDiaRutinaDto ejercicioDiaRutinaDto, Long id);
+    public DiaRutinaDto addEjercicioADiaList(List<EjercicioDiaRutinaDto> ejerciciosDiaRutinaDto, Long id);
+    public DiaRutinaDto deleteEjercicioDeDia(Long idDiaRutina, Long idEjercicioDiaRutina);
 }
